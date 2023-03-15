@@ -34,8 +34,11 @@ public class ElementIntegerModuloN :
 
     public static ElementIntegerModuloN operator +(ElementIntegerModuloN? left, ElementIntegerModuloN? right)
     {
-        if (left == null || right == null)
+        if (right == null)
             throw new ArgumentNullException();
+
+        if (left == null)
+            return right;
 
         if (left.Parent != right.Parent)
             throw new ArgumentException("The elements from different rings");
@@ -116,7 +119,7 @@ public class ElementIntegerModuloN :
 
         return Value % Parent.Modulus == other.Value % other.Parent.Modulus;
     }
-    
+
     public override int GetHashCode()
     {
         return Value.GetHashCode();
