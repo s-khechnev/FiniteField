@@ -1,4 +1,4 @@
-﻿namespace FiniteField;
+﻿namespace FiniteFieldLibrary;
 
 public static class MyMath
 {

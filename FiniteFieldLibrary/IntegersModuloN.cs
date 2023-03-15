@@ -1,27 +1,27 @@
-﻿namespace FiniteField;
+﻿namespace FiniteFieldLibrary;
 
 public class IntegersModuloN
 {
-    public readonly int Modulus;
-    private readonly ElementIntegerModuloN[] _elements;
+    public int Modulus { get; }
+    private ElementIntegerModuloN[] Elements { get; }
 
-    public ElementIntegerModuloN this[int index] => index >= _elements.Length
+    public ElementIntegerModuloN this[int index] => index >= Elements.Length
         ? new ElementIntegerModuloN(this, index % Modulus)
-        : _elements[index];
+        : Elements[index];
 
     public IntegersModuloN(int modulus)
     {
         Modulus = modulus;
-        _elements = new ElementIntegerModuloN[modulus];
+        Elements = new ElementIntegerModuloN[modulus];
 
         InitElements();
     }
 
     private void InitElements()
     {
-        for (int i = 0; i < _elements.Length; i++)
+        for (var i = 0; i < Elements.Length; i++)
         {
-            _elements[i] = new ElementIntegerModuloN(this, i);
+            Elements[i] = new ElementIntegerModuloN(this, i);
         }
     }
     

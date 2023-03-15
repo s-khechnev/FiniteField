@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace FiniteField;
+namespace FiniteFieldLibrary;
 
 public class ElementIntegerModuloN :
     IUnaryPlusOperators<ElementIntegerModuloN, ElementIntegerModuloN>,
@@ -11,9 +11,8 @@ public class ElementIntegerModuloN :
     IDivisionOperators<ElementIntegerModuloN, ElementIntegerModuloN, ElementIntegerModuloN>,
     IEqualityOperators<ElementIntegerModuloN, ElementIntegerModuloN, bool>
 {
-    public readonly IntegersModuloN Parent;
-    public readonly int Value;
-
+    public IntegersModuloN Parent { get; }
+    public int Value { get; }
     public ElementIntegerModuloN Inverse => GetInverseElement();
 
     public ElementIntegerModuloN(IntegersModuloN parent, int value)
@@ -60,7 +59,7 @@ public class ElementIntegerModuloN :
 
     public static ElementIntegerModuloN operator *(ElementIntegerModuloN? left, ElementIntegerModuloN? right)
     {
-        if (left.Equals(null) || right.Equals(null))
+        if (left == null || right == null)
             throw new ArgumentNullException();
 
         if (left.Parent != right.Parent)
@@ -101,7 +100,7 @@ public class ElementIntegerModuloN :
         var g = MyMath.ExtendedGcd(Value, Parent.Modulus, out var x, out var y);
 
         if (g != 1)
-            throw new ArgumentException("Impossible find inverse");
+            throw new ArithmeticException("Impossible find inverse");
 
         var value = (x % Parent.Modulus + Parent.Modulus) % Parent.Modulus;
         return new ElementIntegerModuloN(Parent, value);
