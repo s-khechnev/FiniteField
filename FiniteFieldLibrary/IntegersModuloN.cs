@@ -24,7 +24,19 @@ public class IntegersModuloN
             Elements[i] = new ElementIntegerModuloN(this, i);
         }
     }
-    
+
+    public static ElementIntegerModuloN[] GetArrayWithCoefficientsFromResidueRingFromIntArray(int[] coefficients,
+        IntegersModuloN ring)
+    {
+        var coefficientsFromResidueRing = new ElementIntegerModuloN[coefficients.Length];
+        for (var i = 0; i < coefficients.Length; i++)
+        {
+            coefficientsFromResidueRing[i] = ring[coefficients[i]];
+        }
+
+        return coefficientsFromResidueRing;
+    }
+
     public static bool operator ==(IntegersModuloN? left, IntegersModuloN? right)
     {
         if (ReferenceEquals(left, null) || ReferenceEquals(right, null))

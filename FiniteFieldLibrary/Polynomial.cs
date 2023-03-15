@@ -40,6 +40,14 @@ public class Polynomial<T> where T :
         Array.Resize(ref coefficients, newDegree + 1);
     }
 
+    public static Polynomial<ElementIntegerModuloN> GetPolynomialOverResidueRingFromIntArray(int[] coefficients,
+        IntegersModuloN ring)
+    {
+        var coefficientsOverResidueRing =
+            IntegersModuloN.GetArrayWithCoefficientsFromResidueRingFromIntArray(coefficients, ring);
+        return new Polynomial<ElementIntegerModuloN>(coefficientsOverResidueRing, ring[0]);
+    }
+
     public static Polynomial<T> operator +(Polynomial<T> polynomial) => polynomial;
 
     public static Polynomial<T> operator -(Polynomial<T> polynomial)
