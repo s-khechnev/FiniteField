@@ -6,7 +6,7 @@ public class IntegersModuloN
     private ElementIntegerModuloN[] Elements { get; }
 
     public ElementIntegerModuloN this[int index] => index >= Elements.Length
-        ? new ElementIntegerModuloN(this, index % Modulus)
+        ? Elements[index % Modulus]
         : Elements[index];
 
     public IntegersModuloN(int modulus)
