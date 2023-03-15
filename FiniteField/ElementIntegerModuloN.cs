@@ -57,7 +57,7 @@ public class ElementIntegerModuloN :
 
     public static ElementIntegerModuloN operator *(ElementIntegerModuloN? left, ElementIntegerModuloN? right)
     {
-        if (left == null || right == null)
+        if (left.Equals(null) || right.Equals(null))
             throw new ArgumentNullException();
 
         if (left.Parent != right.Parent)
@@ -80,13 +80,12 @@ public class ElementIntegerModuloN :
 
     public static bool operator ==(ElementIntegerModuloN? left, ElementIntegerModuloN? right)
     {
-        if (left == null || right == null)
-            throw new ArgumentNullException();
+        if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+        {
+            return ReferenceEquals(left, null) && ReferenceEquals(right, null);
+        }
 
-        if (left.Parent != right.Parent)
-            throw new ArgumentException("The elements from different rings");
-
-        return left.Value % left.Parent.Modulus == right.Value % right.Parent.Modulus;
+        return left.Equals(right);
     }
 
     public static bool operator !=(ElementIntegerModuloN? left, ElementIntegerModuloN? right)
@@ -103,5 +102,23 @@ public class ElementIntegerModuloN :
 
         var value = (x % Parent.Modulus + Parent.Modulus) % Parent.Modulus;
         return new ElementIntegerModuloN(Parent, value);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+
+        var other = (ElementIntegerModuloN)obj;
+        if (Parent != other.Parent)
+            throw new ArgumentException("The elements from different rings");
+
+        return Value % Parent.Modulus == other.Value % other.Parent.Modulus;
+    }
+    
+    public override int GetHashCode()
+    {
+        return Value.GetHashCode();
     }
 }

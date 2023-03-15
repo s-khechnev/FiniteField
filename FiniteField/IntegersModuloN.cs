@@ -24,4 +24,33 @@ public class IntegersModuloN
             _elements[i] = new ElementIntegerModuloN(this, i);
         }
     }
+    
+    public static bool operator ==(IntegersModuloN? left, IntegersModuloN? right)
+    {
+        if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+        {
+            return ReferenceEquals(left, null) && ReferenceEquals(right, null);
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(IntegersModuloN? left, IntegersModuloN? right)
+    {
+        return !(left == right);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        var other = (IntegersModuloN)obj;
+        return Modulus == other.Modulus;
+    }
+
+    public override int GetHashCode()
+    {
+        return Modulus.GetHashCode();
+    }
 }
