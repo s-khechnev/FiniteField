@@ -49,6 +49,7 @@ public class FiniteFieldElement
 
     public FiniteFieldElement Pow(int degree)
     {
+        degree %= Parent.Order - 1;
         if (degree == 0) return Parent.One;
         if (degree == 1) return this;
 
