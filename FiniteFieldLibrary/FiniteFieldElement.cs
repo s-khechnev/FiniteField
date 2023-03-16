@@ -47,6 +47,21 @@ public class FiniteFieldElement
         return left.Parent.GetElement(left.Polynomial * right.Inverse.Polynomial % left.Parent.IrreduciblePolynomial);
     }
 
+    public static bool operator ==(FiniteFieldElement? left, FiniteFieldElement? right)
+    {
+        if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+        {
+            return ReferenceEquals(left, null) && ReferenceEquals(right, null);
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(FiniteFieldElement? left, FiniteFieldElement? right)
+    {
+        return !(left == right);
+    }
+
     public FiniteFieldElement Pow(int degree)
     {
         degree %= Parent.Order - 1;
@@ -57,6 +72,24 @@ public class FiniteFieldElement
             return Pow(degree / 2) * Pow(degree / 2);
 
         return this * Pow(degree - 1);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+
+        var other = (FiniteFieldElement)obj;
+        if (Parent != other.Parent)
+            throw new ArgumentException("The elements from different fields");
+
+        return Polynomial == other.Polynomial;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Parent, Polynomial);
     }
 
     public override string ToString()

@@ -119,6 +119,26 @@ public class Polynomial<T> : IEnumerable<T> where T :
         return remainder;
     }
 
+    public static bool operator ==(Polynomial<T>? left, Polynomial<T>? right)
+    {
+        if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+        {
+            return ReferenceEquals(left, null) && ReferenceEquals(right, null);
+        }
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(Polynomial<T>? left, Polynomial<T>? right)
+    {
+        return !(left == right);
+    }
+
+    public IEnumerator GetEnumerator() => _coefficients.GetEnumerator();
+
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        => (IEnumerator<T>)GetEnumerator();
+
     public override string ToString()
     {
         var result = "";
@@ -135,11 +155,6 @@ public class Polynomial<T> : IEnumerable<T> where T :
 
         return result.TrimEnd(' ', '+');
     }
-
-    public IEnumerator GetEnumerator() => _coefficients.GetEnumerator();
-
-    IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        => (IEnumerator<T>)GetEnumerator();
 
     public override int GetHashCode()
     {
