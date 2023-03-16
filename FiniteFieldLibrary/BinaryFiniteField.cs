@@ -42,11 +42,11 @@ public partial class FiniteField
             if (N % 8 != 0)
                 throw new Exception("The N is not a multiple of 8");
 
-            var binaryString = string.Join("", element.Polynomial);
+            var binaryString = string.Join("", element.Polynomial.Coefficients.Select(item => item.Value));
             var bytes = new byte[N / 8];
             for (var i = 0; i < N / 8; i++)
             {
-                bytes[i] = Convert.ToByte(binaryString.Substring(i * 8, 8), 2);
+                bytes[i] = Convert.ToByte(binaryString.Substring(i * 8, 7), 2);
             }
 
             return bytes;
