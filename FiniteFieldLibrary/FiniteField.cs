@@ -9,6 +9,9 @@ public partial class FiniteField
 
     private FiniteField(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
     {
+        if (n != irreduciblePolynomial.Degree)
+            throw new ArgumentException("Irreducible polynomial degree must equal N");
+
         PrimeField = new IntegersModuloN(p);
         N = n;
         Order = (int)Math.Pow(PrimeField.Modulus, n);
@@ -17,6 +20,9 @@ public partial class FiniteField
 
     private FiniteField(int p, int n, int[] irreduciblePolynomial)
     {
+        if (n != irreduciblePolynomial.Length - 1)
+            throw new ArgumentException("Irreducible polynomial degree must equal N");
+
         PrimeField = new IntegersModuloN(p);
         N = n;
         Order = (int)Math.Pow(PrimeField.Modulus, n);
@@ -32,6 +38,12 @@ public partial class FiniteField
 
         return new IntegersModuloN(p);
     }
+
+    public static BinaryFiniteField GetBinary(int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
+        => BinaryFiniteField.Get(n, irreduciblePolynomial);
+
+    public static BinaryFiniteField GetBinary(int n, int[] irreduciblePolynomial)
+        => BinaryFiniteField.Get(n, irreduciblePolynomial);
 
     public static FiniteField Get(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
         => new FiniteField(p, n, irreduciblePolynomial);
