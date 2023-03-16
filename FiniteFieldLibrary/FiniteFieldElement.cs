@@ -11,7 +11,7 @@ public class FiniteFieldElement
         Parent = finiteField;
     }
 
-    public FiniteFieldElement Inverse => Pow(Parent.Characteristic - 2);
+    public FiniteFieldElement Inverse => Pow(Parent.Order - 2);
 
     public static FiniteFieldElement operator +(FiniteFieldElement element) => element;
 
@@ -34,6 +34,17 @@ public class FiniteFieldElement
             throw new ArgumentException("Elements from different fields");
 
         return left.Parent.GetElement(left.Polynomial * right.Polynomial % left.Parent.IrreduciblePolynomial);
+    }
+
+    public static FiniteFieldElement operator /(FiniteFieldElement left, FiniteFieldElement right)
+    {
+        if (left.Parent != right.Parent)
+            throw new ArgumentException("Elements from different fields");
+
+        if (right == right.Parent.Zero)
+            throw new DivideByZeroException("Attempt to divide by zero");
+
+        return left.Parent.GetElement(left.Polynomial * right.Inverse.Polynomial % left.Parent.IrreduciblePolynomial);
     }
 
     public FiniteFieldElement Pow(int degree)

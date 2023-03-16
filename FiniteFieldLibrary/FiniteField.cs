@@ -4,14 +4,14 @@ public class FiniteField
 {
     public IntegersModuloN PrimeField { get; }
     public int N { get; }
-    public int Characteristic { get; }
+    public int Order { get; }
     public Polynomial<ElementIntegerModuloN> IrreduciblePolynomial { get; }
 
     public FiniteField(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
     {
         PrimeField = new IntegersModuloN(p);
         N = n;
-        Characteristic = (int)Math.Pow(PrimeField.Modulus, n);
+        Order = (int)Math.Pow(PrimeField.Modulus, n);
         IrreduciblePolynomial = irreduciblePolynomial;
     }
 
@@ -19,7 +19,7 @@ public class FiniteField
     {
         PrimeField = new IntegersModuloN(p);
         N = n;
-        Characteristic = (int)Math.Pow(PrimeField.Modulus, n);
+        Order = (int)Math.Pow(PrimeField.Modulus, n);
         IrreduciblePolynomial =
             Polynomial<ElementIntegerModuloN>.GetPolynomialOverResidueRingFromIntArray(irreduciblePolynomial,
                 PrimeField);
@@ -71,6 +71,6 @@ public class FiniteField
 
     public override string ToString()
     {
-        return $"GF({Characteristic})";
+        return $"GF({Order})";
     }
 }
