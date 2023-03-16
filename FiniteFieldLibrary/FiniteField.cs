@@ -1,13 +1,13 @@
 ﻿namespace FiniteFieldLibrary;
 
-public class FiniteField
+public partial class FiniteField
 {
     public IntegersModuloN PrimeField { get; }
     public int N { get; }
     public int Order { get; }
     public Polynomial<ElementIntegerModuloN> IrreduciblePolynomial { get; }
 
-    public FiniteField(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
+    private FiniteField(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
     {
         PrimeField = new IntegersModuloN(p);
         N = n;
@@ -15,7 +15,7 @@ public class FiniteField
         IrreduciblePolynomial = irreduciblePolynomial;
     }
 
-    public FiniteField(int p, int n, int[] irreduciblePolynomial)
+    private FiniteField(int p, int n, int[] irreduciblePolynomial)
     {
         PrimeField = new IntegersModuloN(p);
         N = n;
@@ -24,6 +24,20 @@ public class FiniteField
             Polynomial<ElementIntegerModuloN>.GetPolynomialOverResidueRingFromIntArray(irreduciblePolynomial,
                 PrimeField);
     }
+
+    public static IntegersModuloN Get(int p)
+    {
+        if (!MyMath.IsPrime(p))
+            throw new ArithmeticException("Impossible create residue field with not prime modulus");
+
+        return new IntegersModuloN(p);
+    }
+
+    public static FiniteField Get(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
+        => new FiniteField(p, n, irreduciblePolynomial);
+
+    public static FiniteField Get(int p, int n, int[] irreduciblePolynomial)
+        => new FiniteField(p, n, irreduciblePolynomial);
 
     public FiniteFieldElement GetElement(Polynomial<ElementIntegerModuloN> polynomial) => new(polynomial, this);
 
