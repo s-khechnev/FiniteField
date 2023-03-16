@@ -1,8 +1,9 @@
-﻿using System.Numerics;
+﻿using System.Collections;
+using System.Numerics;
 
 namespace FiniteFieldLibrary;
 
-public class Polynomial<T> where T :
+public class Polynomial<T> : IEnumerable<T> where T :
     IUnaryPlusOperators<T, T>,
     IUnaryNegationOperators<T, T>,
     IAdditionOperators<T, T, T>,
@@ -134,6 +135,11 @@ public class Polynomial<T> where T :
 
         return result.TrimEnd(' ', '+');
     }
+
+    public IEnumerator GetEnumerator() => _coefficients.GetEnumerator();
+
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        => (IEnumerator<T>)GetEnumerator();
 
     public override int GetHashCode()
     {
