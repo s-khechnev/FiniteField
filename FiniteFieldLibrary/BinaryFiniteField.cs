@@ -40,7 +40,7 @@ public partial class FiniteField
             return GetElement(polynomial);
         }
 
-        public byte[] GetBytesFromElements(FiniteFieldElement element)
+        public byte[] GetBytesFromElement(FiniteFieldElement element)
         {
             if (N % 8 != 0)
                 throw new Exception("The N is not a multiple of 8");

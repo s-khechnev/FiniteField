@@ -12,4 +12,4 @@ var result = one + one;
 
 var element = field.GetElementFromByte(69);
 // и наоборот
-var _byte = field.GetBytesFromElements(element);
+var _byte = field.GetBytesFromElement(element);
