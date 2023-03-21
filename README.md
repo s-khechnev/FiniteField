@@ -57,5 +57,5 @@ var isNotEqual = element1 == element2; //false
 var field = FiniteField.GetBinary(8, new[] { 1, 1, 0, 1, 1, 0, 0, 0, 1 });
 //байты
 var element = field.GetElementFromByte(69);
-var bytes = field.ElementToByte(element);
+var bytes = field.GetBytesFromElement(element);
 ```
