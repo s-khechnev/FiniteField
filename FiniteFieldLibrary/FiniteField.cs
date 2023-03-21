@@ -46,10 +46,10 @@ public partial class FiniteField
         => BinaryFiniteField.Get(n, irreduciblePolynomial);
 
     public static FiniteField Get(int p, int n, Polynomial<ElementIntegerModuloN> irreduciblePolynomial)
-        => new FiniteField(p, n, irreduciblePolynomial);
+        => p == 2 ? GetBinary(n, irreduciblePolynomial) : new FiniteField(p, n, irreduciblePolynomial);
 
     public static FiniteField Get(int p, int n, int[] irreduciblePolynomial)
-        => new FiniteField(p, n, irreduciblePolynomial);
+        => p == 2 ? GetBinary(n, irreduciblePolynomial) : new FiniteField(p, n, irreduciblePolynomial);
 
     public FiniteFieldElement GetElement(Polynomial<ElementIntegerModuloN> polynomial) => new(polynomial, this);
 
