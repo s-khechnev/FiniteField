@@ -1,6 +1,15 @@
-﻿namespace FiniteFieldLibrary;
+﻿using System.Numerics;
 
-public class FiniteFieldElement
+namespace FiniteFieldLibrary;
+
+public class FiniteFieldElement :
+    IUnaryPlusOperators<FiniteFieldElement, FiniteFieldElement>,
+    IUnaryNegationOperators<FiniteFieldElement, FiniteFieldElement>,
+    IAdditionOperators<FiniteFieldElement, FiniteFieldElement, FiniteFieldElement>,
+    ISubtractionOperators<FiniteFieldElement, FiniteFieldElement, FiniteFieldElement>,
+    IMultiplyOperators<FiniteFieldElement, FiniteFieldElement, FiniteFieldElement>,
+    IDivisionOperators<FiniteFieldElement, FiniteFieldElement, FiniteFieldElement>,
+    IEqualityOperators<FiniteFieldElement, FiniteFieldElement, bool>
 {
     public Polynomial<ElementIntegerModuloN> Polynomial { get; }
     public FiniteField Parent { get; }

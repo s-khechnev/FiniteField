@@ -95,6 +95,30 @@ public class Polynomial<T> where T :
         return new Polynomial<T>(coefficients, left.ZeroElement);
     }
 
+    public static Polynomial<T> operator /(Polynomial<T> dividend, Polynomial<T> divisor)
+    {
+        if (dividend == null || divisor == null)
+            throw new ArgumentNullException();
+
+        if (dividend.Degree < divisor.Degree)
+            return dividend;
+
+        var remainder = new Polynomial<T>((T[])dividend._coefficients.Clone(), dividend.ZeroElement);
+        var quotient = new T[dividend.Degree - divisor.Degree + 1];
+
+        for (var i = 0; i < quotient.Length; i++)
+        {
+            var coefficient = remainder[remainder.Degree - i] / divisor._coefficients.Last();
+            quotient[quotient.Length - 1 - i] = coefficient;
+            for (var j = 0; j < divisor._coefficients.Length; j++)
+            {
+                remainder._coefficients[remainder.Degree - i - j] -= coefficient * divisor[divisor.Degree - j];
+            }
+        }
+
+        return new Polynomial<T>(quotient, dividend.ZeroElement);
+    }
+    
     public static Polynomial<T> operator %(Polynomial<T> dividend, Polynomial<T> divisor)
     {
         if (dividend == null || divisor == null)
