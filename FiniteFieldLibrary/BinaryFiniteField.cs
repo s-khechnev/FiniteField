@@ -34,8 +34,8 @@ public partial class FiniteField
             var normalizedArr = bytes.Concat(zeroArr).ToArray();
             var number = BitConverter.ToInt32(normalizedArr);
 
-            var binaryString = Convert.ToString(number, 2);
-            var polynomial = binaryString.Select(item => item - '0').ToArray();
+            var reversedBinaryString = Convert.ToString(number, 2).Reverse();
+            var polynomial = reversedBinaryString.Select(item => item - '0').ToArray();
 
             return GetElement(polynomial);
         }
@@ -45,8 +45,9 @@ public partial class FiniteField
             if (N % 8 != 0)
                 throw new Exception("The N is not a multiple of 8");
 
-            var binaryString = string.Join("", element.Polynomial.Coefficients.Select(item => item.Value));
-            var number = Convert.ToInt32(binaryString, 2);
+            var reversedBinaryString =
+                string.Join("", element.Polynomial.Coefficients.Select(item => item.Value)).Reverse();
+            var number = Convert.ToInt32(reversedBinaryString, 2);
             return BitConverter.GetBytes(number);
         }
     }
