@@ -78,7 +78,10 @@ public class FiniteFieldElement :
         if (degree == 1) return this;
 
         if (degree % 2 == 0)
-            return Pow(degree / 2) * Pow(degree / 2);
+        {
+            var powered = Pow(degree / 2);
+            return powered * powered;
+        }
 
         return this * Pow(degree - 1);
     }

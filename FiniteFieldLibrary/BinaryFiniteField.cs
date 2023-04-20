@@ -30,9 +30,17 @@ public partial class FiniteField
             if (bytes.Length > 4)
                 throw new ArgumentException("Too many bytes");
 
-            var zeroArr = new byte[4 - bytes.Length];
-            var normalizedArr = bytes.Concat(zeroArr).ToArray();
-            var number = BitConverter.ToInt32(normalizedArr);
+            int number;
+            if (bytes.Length == 4)
+            {
+                number = BitConverter.ToInt32(bytes);
+            }
+            else
+            {
+                var zeroArr = new byte[4 - bytes.Length];
+                var normalizedArr = bytes.Concat(zeroArr).ToArray();
+                number = BitConverter.ToInt32(normalizedArr);
+            }
 
             var reversedBinaryString = Convert.ToString(number, 2).Reverse();
             var polynomial = reversedBinaryString.Select(item => item - '0').ToArray();
