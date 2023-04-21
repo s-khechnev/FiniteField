@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace FiniteFieldLibrary;
 
@@ -25,10 +24,11 @@ public class Polynomial<T> where T :
     {
         ZeroElement = zeroElement;
 
-        if (coefficients[^1] == ZeroElement)
-            CutHighZero(ref coefficients);
-
-        _coefficients = coefficients;
+        _coefficients = new T[coefficients.Length];
+        Array.Copy(coefficients, _coefficients, coefficients.Length);
+        
+        if (_coefficients[^1] == ZeroElement)
+            CutHighZero(ref _coefficients);
     }
 
     private void CutHighZero(ref T[] coefficients)
@@ -51,7 +51,7 @@ public class Polynomial<T> where T :
         return new Polynomial<ElementIntegerModuloN>(coefficientsOverResidueRing, ring[0]);
     }
 
-    public static Polynomial<T> operator +(Polynomial<T> polynomial) => polynomial;
+    public static Polynomial<T> operator +(Polynomial<T> polynomial) => new (polynomial._coefficients, polynomial.ZeroElement);
 
     public static Polynomial<T> operator -(Polynomial<T> polynomial)
     {
